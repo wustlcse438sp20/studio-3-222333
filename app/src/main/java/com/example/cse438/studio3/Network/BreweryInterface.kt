@@ -9,7 +9,11 @@ import retrofit2.http.Query
 interface BreweryInterface {
 
     //TODO #4: Create a function signature for accessing breweries by city
+    @GET("breweries/search")
+    suspend fun searchbycity(@Query("by_city") city: String): Response<Brewery>
 
     //TODO #5: Create a function signature that provides a search term for breweries
+    @GET("breweries/search")
+    suspend fun searchbyTerm(@Query("query") name: String): Response<Brewery>
 
 }

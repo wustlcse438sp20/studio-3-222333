@@ -2,10 +2,13 @@ package com.example.cse438.studio3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cse438_rest_studio.Adapter.BreweryListAdapter
+import com.example.cse438_rest_studio.data.Brewery
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +28,16 @@ class MainActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(BreweryViewModel::class.java)
 
         //TODO #10: Set up observer code for the LiveData object from the View Model
-
+         viewModel!!.breweriesList.observe(this, Observer {
+             breweryList.clear()
+             breweryList.addAll()
+             adapter.notifyDataSetChanged()
+         })
         //TODO #11: Connect the button so that it performs the search when it is clicked
+        search_button.setOnClickListener(){
+            val text:String= search_box.text.toString()
+            viewModel.getBreweryByCity(text)
+        }
+
     }
 }
